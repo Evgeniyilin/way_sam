@@ -6,15 +6,15 @@ const MyPosts = () => {
     return (
         <div className={s.content}>
             <div>
-                my posts
+                <h3>my posts</h3>
                 <div>
                     <textarea></textarea>
                     <button>Add posts</button>
                     <button>Remove</button>
                 </div>
                 <div className={s.posts}>
-                    <Post />
-                    <Post />
+                    <Post messages='Hello, friends!' likeCount='34'/>
+                    <Post messages='Life is good!' likeCount='30'/>
                 </div>
             </div>
         </div>
