@@ -1,39 +1,17 @@
 import React from 'react';
 import s from './Dialogs.module.css'
-import {NavLink} from "react-router-dom";
-
-const DialogItem = (props) => {
-    let path = '/dialogs/' + props.id;
-    return (
-        <div className={s.dialogs}>
-            <NavLink to={path}>{props.name}</NavLink>
-        </div>
-    )
-}
-
-const Message = (props) => {
-    return <div className={s.dialog}>{props.message}</div>
-}
-
+import DialogItem from "./DialogItem/DialogItem";
+import Message from "./Message/Message";
 
 const Dialogs = (props) => {
+    let dialogsElements = props.state.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>);
+    let messagesElements = props.state.messages.map(m => <Message message={m.message}/>);
 
-    let dialogs = [
-        {id: 1, name: 'Evgeniy'},
-        {id: 2, name: 'Julia'},
-        {id: 3, name: 'Aleksandra'},
-        {id: 4, name: 'Michail'}
-    ]
-    let messages = [
-        {id: 1, message:'Hello'},
-        {id: 2, message: 'I working'},
-        {id: 3, message: 'Welcome to the my World'}
-    ]
-
-
-    let dialogsElements = dialogs.map( d => <DialogItem name={d.name} id={d.id}/>);
-    let messagesElements = messages.map( m => <Message message={m.message}/>);
-
+    let newMessagesElements = React.createRef();
+    let addMessagesElements = () => {
+        let text = newMessagesElements.current.value;
+        alert (text);
+    }
 
     return (
         <div className={s.dialogs}>
@@ -42,6 +20,8 @@ const Dialogs = (props) => {
             </div>
             <div className={s.messages}>
                 {messagesElements}
+                <textarea ref={newMessagesElements}></textarea>
+                <button onClick={addMessagesElements}>Send</button>
             </div>
         </div>
     )

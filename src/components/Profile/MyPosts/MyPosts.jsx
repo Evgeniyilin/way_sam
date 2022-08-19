@@ -3,22 +3,37 @@ import s from './MyPosts.module.css'
 import Post from "./Post/Post"
 
 console.log()
-const MyPosts = () => {
-    let posts = [
-        {id: 1, message: 'Hello, friends!', likesCount: 34},
-        {id: 2, message: 'Life is good!', likesCount: 30}
-    ]
+const MyPosts = (props) => {
+    let postsElements = props.posts.map(p => <Post messages={p.message} likesCount={p.likesCount}/>);
 
-    let postsElements = posts.map(p => <Post messages={p.message} likesCount={p.likesCount}/>);
+    let newPostElement = React.createRef();
+
+    let addPost = () => {
+        let text = newPostElement.current.value;
+        props.addPost(text);
+        props.updateNewPostText('');
+    }
+
+    let onPostChange = () => {
+        let text = newPostElement.current.value;
+        props.updateNewPostText(text);
+    }
 
     return (
         <div className={s.content}>
             <div>
                 <h3>my posts</h3>
                 <div>
-                    <textarea></textarea>
-                    <button>Add posts</button>
-                    <button>Remove</button>
+                    <div>
+                        <textarea onChange={onPostChange}
+                                  ref={newPostElement}
+                                  value={props.newPostText}/>
+                    </div>
+                    <div>
+                        <button onClick={addPost}>Add posts</button>
+                        <button>Remove</button>
+                    </div>
+
                 </div>
                 <div className={s.posts}>
                     {postsElements}
