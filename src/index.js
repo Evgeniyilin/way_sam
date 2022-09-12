@@ -1,11 +1,10 @@
 import React from 'react';
 import './index.css';
-import state from "./redux/state";
+import store from "./redux/state";
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {addPost, updateNewPostText, subscribe} from "./redux/state";
 
 // addPost("Smoke is white");
 
@@ -15,14 +14,14 @@ let rerenderEntireTree = (state) => {
     root.render(
         <React.StrictMode>
             {/* <App /> Это и есть компонента */}
-            <App state={state} addPost={addPost} updateNewPostText={updateNewPostText}/>
+            <App state={state} dispatch={store.dispatch.bind(store)} store={store}/>
         </React.StrictMode>
     );
 };
 
-rerenderEntireTree(state);
+rerenderEntireTree(store.getState());
 
-subscribe(rerenderEntireTree);
+store.subscribe(rerenderEntireTree);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
